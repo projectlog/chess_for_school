@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1f2937" />
+  <meta name="description" content="10~14세 초보자를 위한 체스 규칙 학습 및 게임 웹 앱" />
+  <title>체스 첫걸음</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">CHESS STARTER</p>
+      <h1>체스 첫걸음</h1>
+      <p class="subtitle">규칙을 배우고, 미션을 풀고, 직접 대국해 보세요.</p>
+    </div>
+    <button id="soundToggle" class="icon-button" type="button" aria-pressed="true" aria-label="소리 켜기 또는 끄기">🔊</button>
+  </header>
+
+  <nav class="mode-tabs" aria-label="학습 모드 선택">
+    <button class="tab active" data-mode="learn" type="button">📘 규칙 배우기</button>
+    <button class="tab" data-mode="mission" type="button">🎯 미션 연습</button>
+    <button class="tab" data-mode="game" type="button">♟️ 자유 대국</button>
+  </nav>
+
+  <main class="app-main">
+    <section id="learnPanel" class="panel active" aria-labelledby="learnTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">STEP 1</p>
+          <h2 id="learnTitle">말의 움직임을 익혀요</h2>
+        </div>
+        <div class="progress-wrap" aria-label="학습 진행률">
+          <div class="progress-bar"><span id="learnProgress"></span></div>
+          <strong id="learnProgressText">1 / 8</strong>
+        </div>
+      </div>
+
+      <div class="learn-layout">
+        <article class="lesson-card">
+          <div class="lesson-icon" id="lessonIcon">♟</div>
+          <div>
+            <span class="lesson-number" id="lessonNumber">레슨 1</span>
+            <h3 id="lessonTitle">체스판과 목표</h3>
+            <p id="lessonText"></p>
+            <ul id="lessonTips" class="tip-list"></ul>
+          </div>
+          <div class="lesson-actions">
+            <button id="prevLesson" class="secondary-button" type="button">← 이전</button>
+            <button id="nextLesson" class="primary-button" type="button">다음 →</button>
+          </div>
+        </article>
+
+        <aside class="mini-board-card">
+          <div class="mini-board-header">
+            <h3>움직임 미리 보기</h3>
+            <span id="miniCaption">칸을 눌러 보세요.</span>
+          </div>
+          <div id="miniBoard" class="mini-board" aria-label="기물 움직임 예시 체스판"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="missionPanel" class="panel" aria-labelledby="missionTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">STEP 2</p>
+          <h2 id="missionTitle">미션으로 연습해요</h2>
+        </div>
+        <div class="score-chip">⭐ <span id="missionScore">0</span>점</div>
+      </div>
+
+      <div class="game-layout">
+        <div class="board-column">
+          <div id="missionBoard" class="chess-board" aria-label="체스 미션 보드"></div>
+          <div class="board-tools">
+            <button id="missionReset" class="secondary-button" type="button">다시 시작</button>
+            <button id="missionHint" class="secondary-button" type="button">힌트 보기</button>
+          </div>
+        </div>
+        <aside class="info-card">
+          <span class="mission-badge" id="missionBadge">미션 1</span>
+          <h3 id="missionName"></h3>
+          <p id="missionDescription"></p>
+          <div id="missionFeedback" class="feedback" role="status" aria-live="polite">말을 눌러 시작하세요.</div>
+          <div class="mission-nav">
+            <button id="prevMission" class="secondary-button" type="button">← 이전</button>
+            <button id="nextMission" class="primary-button" type="button">다음 미션 →</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gamePanel" class="panel" aria-labelledby="gameTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">STEP 3</p>
+          <h2 id="gameTitle">직접 대국해요</h2>
+        </div>
+        <div class="game-controls">
+          <label>
+            상대
+            <select id="gameMode">
+              <option value="ai">컴퓨터</option>
+              <option value="local">친구와 2인</option>
+            </select>
+          </label>
+          <label>
+            내 색
+            <select id="playerColor">
+              <option value="w">백</option>
+              <option value="b">흑</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="game-layout">
+        <div class="board-column">
+          <div id="gameStatus" class="turn-banner" role="status" aria-live="polite">백 차례입니다.</div>
+          <div id="gameBoard" class="chess-board" aria-label="자유 대국 체스판"></div>
+          <div class="board-tools">
+            <button id="newGame" class="primary-button" type="button">새 게임</button>
+            <button id="undoMove" class="secondary-button" type="button">한 수 되돌리기</button>
+            <button id="flipBoard" class="secondary-button" type="button">판 뒤집기</button>
+          </div>
+        </div>
+
+        <aside class="info-card game-info">
+          <h3>대국 기록</h3>
+          <ol id="moveList" class="move-list"></ol>
+          <div class="rule-reminder">
+            <strong>기억하세요!</strong>
+            <p>왕이 공격받으면 반드시 체크를 피해야 합니다. 상대 왕을 잡는 것이 아니라, 피할 수 없게 만드는 것이 체크메이트입니다.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="promotionModal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="promotionTitle">
+      <h2 id="promotionTitle">어떤 말로 승급할까요?</h2>
+      <div id="promotionChoices" class="promotion-choices"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>GitHub Pages에서 바로 실행되는 바닐라 HTML·CSS·JavaScript 체스 학습 앱</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
